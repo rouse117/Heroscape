@@ -5,7 +5,7 @@ using Photon.Realtime;
 public class Cube_Multiplayer_Script: MonoBehaviourPun
 {
     [SerializeField]
-    private int serializedValue = 0;
+    public int serializedValue = 0;
 
     private int controllingPlayer = 0;
 

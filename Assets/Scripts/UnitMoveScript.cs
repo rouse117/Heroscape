@@ -14,8 +14,18 @@ public class UnitMoveScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject hex1 = GameObject.Find("Hex(0, 0, 0)");
-        DeployToHex(hex1);
+        
+        if (this.gameObject.GetComponent< Cube_Multiplayer_Script>().serializedValue == 1 )
+        {
+            GameObject hex1 = GameObject.Find("Hex(0, 0, 0)");
+            DeployToHex(hex1);
+        }
+        else
+        {
+            GameObject hex1 = GameObject.Find("Hex(9, 0, 0)");
+            DeployToHex(hex1);
+        }
+        
         remainingMove = moveSpeed;
         UCS = GameObject.Find("UnitController").GetComponent<UnitControllerScript>();
     }

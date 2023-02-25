@@ -9,9 +9,14 @@ namespace Com.NotHeroscape.Launcher
 {
     public class Launcher : MonoBehaviourPunCallbacks
     {
-    #region Private Serializable Fields
 
-    // Max number of players per room, new room will be created when full
+    private const string ROOM_NAME = "myRoom";
+    private const int MAX_PLAYERS = 2;
+        #region Private Serializable Fields
+
+
+
+        // Max number of players per room, new room will be created when full
     [Tooltip("The maximum number of players per room. When a room is full, it can't be joined and a new room will be created.")]
     [SerializeField]
     private byte maxPlayersPerRoom = 2;
@@ -59,8 +64,8 @@ namespace Com.NotHeroscape.Launcher
         
         if (PhotonNetwork.IsConnected)
         {
-            // attempt joining a room
-            PhotonNetwork.JoinRandomRoom();
+                // attempt joining a room
+               PhotonNetwork.JoinOrCreateRoom(ROOM_NAME, new RoomOptions { MaxPlayers = MAX_PLAYERS }, TypedLobby.Default); ;
         }
         else
         {
