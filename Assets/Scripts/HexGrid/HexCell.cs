@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -10,10 +11,12 @@ public class HexCell : MonoBehaviour {
     [SerializeField] private int z = 0;
 
     [SerializeField] private bool isActive = false;
+    public bool movable = false;
 
     [SerializeField] List<Material> materials = new List<Material>();
 
     private static string dynamicBaseName = "Hex";
+
 
     //Get the GameObject’s mesh renderer to access the GameObject’s material and color
     MeshRenderer m_Renderer;
@@ -41,7 +44,8 @@ public class HexCell : MonoBehaviour {
     public void SetActive(bool active) {
         isActive = active;
     }
-         
+    
+    /*
     void OnMouseOver() {
         // Change the color of the GameObject to red when the mouse is over GameObject
         m_Renderer.material.color = m_MouseOverColor;
@@ -61,6 +65,26 @@ public class HexCell : MonoBehaviour {
             m_Renderer.material.color = m_OriginalColor;
         }
     }
+    */
+
+    void OnMouseOver()
+    {
+        if (GameObject.Find("UnitController").GetComponent<UnitControllerScript>().activeUnit == null) {
+            UnityEngine.Debug.Log("Active unit is null");
+        }
+        else { 
+            UnityEngine.Debug.Log("Active unit is " + GameObject.Find("UnitController").GetComponent<UnitControllerScript>().activeUnit); 
+        }
+    }
+
+    void OnMouseDown()
+    {
+        if (GameObject.Find("UnitController").GetComponent<UnitControllerScript>().activeUnit != null && movable && GameObject.Find("UnitController").GetComponent<UnitControllerScript>().movementPhase)
+        {
+            GameObject.Find("UnitController").GetComponent<UnitControllerScript>().activeUnit.GetComponent<UnitMoveScript>().CheckHex(this.gameObject);
+        }
+    }
+
 
     public int getX() {
         return x;
