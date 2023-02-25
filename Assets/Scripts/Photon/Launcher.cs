@@ -2,6 +2,8 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
+using UnityEngine.SceneManagement;
+
 // temp namespace
 namespace Com.NotHeroscape.Launcher
 {
@@ -82,7 +84,7 @@ namespace Com.NotHeroscape.Launcher
     {
         progressLabel.SetActive(false);
         controlPanel.SetActive(true);
-        
+
         Debug.LogWarningFormat("NotHeroscape: OnDisconnected() was called by PUN with reason {0}", cause);
     }
 
@@ -99,6 +101,7 @@ namespace Com.NotHeroscape.Launcher
     public override void OnJoinedRoom()
     {
         Debug.Log("NotHeroscape: OnJoinedRoom() called by PUN. This client is in a room.");
+        SceneManager.LoadScene(1);
     }
 
 
