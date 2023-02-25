@@ -22,11 +22,52 @@ public class HexGrid : MonoBehaviour
     [SerializeField] int sizeY = 10;
 
     [SerializeField] List<HexCell> cells = new List<HexCell>();
-    [SerializeField] List<HexCell> axtiveCells = new List<HexCell>();
+    [SerializeField] List<HexCell> activeCells = new List<HexCell>();
+
+    public int GetSizeX() {
+        return sizeX;
+    }
+
+    public int GetSizeY() {
+        return sizeX;
+    }
+
+    public List<HexCell> GetCells() {
+        return cells;
+    }
 
     void Start() {
-        if (transform.GetComponentsInChildren<Transform>().Length == 1) {
-            GenerateHexGrid(sizeX, sizeY);
+
+    }
+
+    public void Save() {
+        HexGridDto hexGridDto = new HexGridDto();
+        hexGridDto.Serialize(this);
+    }
+
+    public void Restore() {
+        HexGridDto hexGridDto = new HexGridDto();
+        hexGridDto = hexGridDto.Deserialize();
+
+        foreach (Transform child in transform) {
+            Destroy(child.gameObject);
+        }
+
+        cells = new List<HexCell>();
+        activeCells = new List<HexCell>();
+
+        GenerateHexGrid(hexGridDto.GetSizeX(), hexGridDto.GetSizeY());
+
+        foreach(HexCellDto hexCellDto in hexGridDto.GetHexCells()) {
+            if (hexCellDto.IsActive) {
+                HexCell hexCell = FindCell(hexCellDto.X, hexCellDto.Y);
+                hexCell.SetActive(true);
+                hexCell.setZ(hexCellDto.Z);
+                hexCell.SetHeight();
+                hexCell.SetName();
+
+                activeCells.Add(hexCell);
+            }
         }
     }
 
@@ -41,11 +82,11 @@ public class HexGrid : MonoBehaviour
     }
 
     public void AddActiveCell(HexCell cell) {
-        axtiveCells.Add(cell);
+        activeCells.Add(cell);
     }
 
     public void RemoveActiveCell(HexCell cell) {
-        axtiveCells.Remove(cell);
+        activeCells.Remove(cell);
     }
 
     public void GenerateHexGrid(int sizeX = 0, int sizeY = 0) {

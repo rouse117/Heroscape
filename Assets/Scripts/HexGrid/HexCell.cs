@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -13,16 +14,16 @@ public class HexCell : MonoBehaviour {
     [SerializeField] private bool isActive = false;
 
     [SerializeField] List<Material> materials = new List<Material>();
+    [SerializeField] Mesh originalMesh;
+    [SerializeField] Mesh activeMesh;
     [SerializeField] GameObject heightHexCell;
 
     private static string dynamicBaseName = "Hex";
     private List<GameObject> heightCells = new List<GameObject>();
 
     //Get the GameObject’s mesh renderer to access the GameObject’s material and color
-    MeshRenderer m_Renderer;
-    Color m_colorLayer1 = Color.red;
-    Color m_colorLayer2 = Color.blue;
-    Color m_colorLayer3 = Color.yellow;
+    [SerializeField] private MeshRenderer m_Renderer;
+    Color m_colorMouseOver = Color.red;
 
     Color m_OriginalColor;
     // Start is called before the first frame update
@@ -32,6 +33,8 @@ public class HexCell : MonoBehaviour {
         m_Renderer = GetComponent<MeshRenderer>();
 
         m_OriginalColor = m_Renderer.material.color;
+
+        originalMesh = GetComponent<Mesh>();
 
         m_Renderer.SetMaterials(materials);
     }
@@ -44,60 +47,75 @@ public class HexCell : MonoBehaviour {
         return isActive;
     }
 
+    public Color GetColor() {
+        return m_Renderer.material.color;
+    }
+
     public void SetActive(bool active) {
+        if (active) {
+            var meshInstance = Instantiate(activeMesh);
+            GetComponent<MeshFilter>().mesh = meshInstance;
+        }
+
         isActive = active;
     }
          
     void OnMouseOver() {
-        // Change the color of the GameObject to red when the mouse is over GameObject
-        m_Renderer.material.color = GetMouseOverColor(z);
-        if (Input.GetMouseButtonDown(0)) {
+        m_Renderer.material.color = m_colorMouseOver;
 
+        //Right Mouse Button
+        if (Input.GetMouseButtonDown(0)) {
             if (isActive) {
                 AddHeight();
             } else {
                 SetActive(true);
-                m_Renderer.material.color = m_Renderer.material.color;
                 HexGrid.Instance.AddActiveCell(this);
             }
+
+            var meshInstance = Instantiate(activeMesh);
+            GetComponent<MeshFilter>().mesh = meshInstance;
         }
 
+        //Left Mouse Button
         if (Input.GetMouseButtonDown(1)) {
             if (isActive) {
                 SetActive(false);
-                m_Renderer.material.color = m_OriginalColor;
                 HexGrid.Instance.RemoveActiveCell(this);
                 foreach(GameObject heightCell in heightCells) {
                     Destroy(heightCell);
                     transform.position = new Vector3(transform.position.x, transform.position.y - HexCellOffset.zOffset, transform.position.z);
                 }
+                GetComponent<MeshFilter>().mesh = originalMesh;
+                heightCells = new List<GameObject>();
                 z = 0;
                 this.name = dynamicBaseName + "(" + x + ", " + y + ", " + z + ")";
             }
         }
     }
 
-    private void AddHeight() {
-        switch (z) {
-            case 0:
-                CreateHeightHex();
-                m_Renderer.material.color = m_colorLayer2;
-                break;
-            default:
-                CreateHeightHex();
-                m_Renderer.material.color = m_colorLayer3;
-                break;
-        }
+    public void AddHeight() {
+        CreateHeightHex(z);
         z += 1;
         this.name = dynamicBaseName + "(" + x + ", " + y + ", " + z + ")";
     }
 
-    private void CreateHeightHex() {
+    public void SetHeight() {
+        heightCells = new List<GameObject>();
+        for (int heights = 0; heights < z; heights++) {
+            CreateHeightHex(heights);
+        }
+    }
+
+    public void SetName() {
+        this.name = dynamicBaseName + "(" + x + ", " + y + ", " + z + ")";
+    }
+
+    private void CreateHeightHex(int heightLayer) {
         GameObject newHex = Instantiate(heightHexCell, this.transform);
 
         float positionY;
         if (heightCells.Count > 0) {
-            positionY = heightCells.ElementAt(z - 1).transform.position.y;
+            positionY = heightCells.ElementAt(heightLayer - 1).transform.position.y;
         } else {
             positionY = newHex.transform.position.y;
         }
@@ -107,40 +125,8 @@ public class HexCell : MonoBehaviour {
         heightCells.Add(newHex);
     }
 
-    private Color GetLowerLayerColor(int currentZ) {
-        switch (currentZ) {
-            case 0:
-                return m_colorLayer1;
-            case 1:
-                return m_colorLayer2;
-            case 2:
-                return m_colorLayer3;
-        }
-
-        return m_colorLayer3;
-    }
-
-    public Color GetMouseOverColor(int z) {
-        if (isActive) {
-            switch (z) {
-                case 0:
-                    return m_colorLayer2;
-                case 1:
-                    return m_colorLayer3;
-                default:
-                    return m_colorLayer3;
-            }
-        }
-
-        return m_colorLayer1;
-    }
-
     void OnMouseExit() {
-        if (!isActive) {
-            m_Renderer.material.color = m_OriginalColor;
-        } else {
-            m_Renderer.material.color = GetLowerLayerColor(z);
-        }
+        m_Renderer.material.color = m_OriginalColor;
     }
 
     public int getX() {
@@ -153,6 +139,10 @@ public class HexCell : MonoBehaviour {
 
     public int getY() {
         return y;
+    }
+
+    public int getZ() {
+        return z;
     }
 
     public void setY(int y) {
