@@ -54,7 +54,7 @@ public class HexGrid : MonoBehaviour
                     if (y == 0) {
                         previousHexCell = GenerateTop(x, y, z);
                     } else {
-                        previousHexCell = GenerateHexCell(x, y, z, previousHexCell.transform.position, 3);
+                        previousHexCell = GenerateHexCell(x, y, z, previousHexCell.transform.position, HexCellOffset.Offset.offset3);
                     }
                 }
             }
@@ -66,13 +66,13 @@ public class HexGrid : MonoBehaviour
         Vector3 foundCellPosition = FindCell(x - 1, 0).transform.position;
 
         if (xIsEven) {
-            return GenerateHexCell(x, y, z, foundCellPosition, 1);
+            return GenerateHexCell(x, y, z, foundCellPosition, HexCellOffset.Offset.offset1);
         } else {
-            return GenerateHexCell(x, y, z, foundCellPosition, 2);
+            return GenerateHexCell(x, y, z, foundCellPosition, HexCellOffset.Offset.offset2);
         }
     }
 
-    private HexCell GenerateHexCell(int x, int y, int z, Vector3 position, int offset) {
+    private HexCell GenerateHexCell(int x, int y, int z, Vector3 position, HexCellOffset.Offset offset) {
         HexCell newHexCell = HexCell.CreateHexCell(hexCellPrefab, x, y, z, this.transform, position, offset);
         cells.Add(newHexCell);
         return newHexCell;
