@@ -81,6 +81,35 @@ public class HexGrid : MonoBehaviour
         return newHexCell;
     }
 
+    public List<HexCell> GetNeighbors(int x, int y) {
+        List<(int, int)> neighborCoordinates = new List<(int, int)>();
+        if (x % 2 != 0) {
+            neighborCoordinates.Add((x, y - 1));
+            neighborCoordinates.Add((x + 1, y));
+            neighborCoordinates.Add((x + 1, y + 1));
+            neighborCoordinates.Add((x, y + 1));
+            neighborCoordinates.Add((x - 1, y + 1));
+            neighborCoordinates.Add((x - 1, y));
+        } else {
+            neighborCoordinates.Add((x, y - 1));
+            neighborCoordinates.Add((x + 1, y - 1));
+            neighborCoordinates.Add((x + 1, y));
+            neighborCoordinates.Add((x, y + 1));
+            neighborCoordinates.Add((x - 1, y));
+            neighborCoordinates.Add((x - 1, y - 1));
+        }
+
+        List<HexCell> neighbors = new List<HexCell>();
+        foreach ((int, int) coordinate in neighborCoordinates) {
+            foreach (HexCell cell in cells) {
+                if (cell.getX() == coordinate.Item1 && cell.getY() == coordinate.Item2) {
+                    neighbors.Add(cell);
+                }
+            }
+        }
+        return neighbors;
+    }
+
     // Update is called once per frame
     void Update() {
 
