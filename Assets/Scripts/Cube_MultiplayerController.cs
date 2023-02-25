@@ -40,10 +40,10 @@ public class Cube_Multiplayer_Script: MonoBehaviourPun
         else if (controllingPlayer == PhotonNetwork.LocalPlayer.ActorNumber)
         {
             // If the local player is controlling the object, allow them to move it
-            float moveSpeed = 5f;
-            float horizontalInput = Input.GetAxis("Horizontal");
-            float verticalInput = Input.GetAxis("Vertical");
-            transform.Translate(new Vector3(horizontalInput, 0f, verticalInput) * moveSpeed * Time.deltaTime);
+            // float moveSpeed = 5f;
+            // float horizontalInput = Input.GetAxis("Horizontal");
+            // float verticalInput = Input.GetAxis("Vertical");
+            // transform.Translate(new Vector3(horizontalInput, 0f, verticalInput) * moveSpeed * Time.deltaTime);
 
             // If the local player is controlling the object, synchronize the position across clients
             photonView.RPC("SyncPosition", RpcTarget.Others, transform.position);
