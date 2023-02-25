@@ -14,6 +14,14 @@ namespace Com.NotHeroscape.Launcher
     [SerializeField]
     private byte maxPlayersPerRoom = 2;
 
+    [Tooltip("The Ui Panel to let the user enter name, connect and play")]
+    [SerializeField]
+    private GameObject controlPanel;
+
+    [Tooltip("The UI Label to inform the user that the connection is in progress")]
+    [SerializeField]
+    private GameObject progressLabel;
+
     #endregion
 
     #region Private Fields
@@ -34,7 +42,8 @@ namespace Com.NotHeroscape.Launcher
 
     void Start()
     {
-
+        progressLabel.SetActive(false);
+        controlPanel.SetActive(true);
     }
 
     #endregion
@@ -43,6 +52,9 @@ namespace Com.NotHeroscape.Launcher
 
     public void Connect()
     {
+        progressLabel.SetActive(true);
+        controlPanel.SetActive(false);
+        
         if (PhotonNetwork.IsConnected)
         {
             // attempt joining a room
@@ -68,6 +80,9 @@ namespace Com.NotHeroscape.Launcher
     }
     public override void OnDisconnected(DisconnectCause cause)
     {
+        progressLabel.SetActive(false);
+        controlPanel.SetActive(true);
+        
         Debug.LogWarningFormat("NotHeroscape: OnDisconnected() was called by PUN with reason {0}", cause);
     }
 
