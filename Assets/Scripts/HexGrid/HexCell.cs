@@ -34,8 +34,6 @@ public class HexCell : MonoBehaviour {
 
         m_OriginalColor = m_Renderer.material.color;
 
-        originalMesh = GetComponent<Mesh>();
-
         m_Renderer.SetMaterials(materials);
     }
      
