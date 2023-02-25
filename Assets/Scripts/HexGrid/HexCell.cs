@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using System.Linq;
 using System.Security.Cryptography;
+
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -23,7 +25,7 @@ public class HexCell : MonoBehaviour {
     private static string dynamicBaseName = "Hex";
     private List<GameObject> heightCells = new List<GameObject>();
 
-    //Get the GameObject’s mesh renderer to access the GameObject’s material and color
+    //Get the GameObjectï¿½s mesh renderer to access the GameObjectï¿½s material and color
     [SerializeField] private MeshRenderer m_Renderer;
     Color m_colorMouseOver = Color.red;
 
