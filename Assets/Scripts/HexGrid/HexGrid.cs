@@ -185,4 +185,56 @@ public class HexGrid : MonoBehaviour
     void Update() {
 
     }
+
+    public List<HexCell> GetNeighbors(HexCell hexCell)
+    {
+        int x = hexCell.getX();
+        int y = hexCell.getY();
+
+        List<(int, int)> neighborCoordinates = new List<(int, int)>();
+        if (x % 2 != 0)
+        {
+            neighborCoordinates.Add((x, y - 1));
+            neighborCoordinates.Add((x + 1, y));
+            neighborCoordinates.Add((x + 1, y + 1));
+            neighborCoordinates.Add((x, y + 1));
+            neighborCoordinates.Add((x - 1, y + 1));
+            neighborCoordinates.Add((x - 1, y));
+        }
+        else
+        {
+            neighborCoordinates.Add((x, y - 1));
+            neighborCoordinates.Add((x + 1, y - 1));
+            neighborCoordinates.Add((x + 1, y));
+            neighborCoordinates.Add((x, y + 1));
+            neighborCoordinates.Add((x - 1, y));
+            neighborCoordinates.Add((x - 1, y - 1));
+        }
+
+        List<HexCell> neighbors = new List<HexCell>();
+        foreach ((int, int) coordinate in neighborCoordinates)
+        {
+            foreach (HexCell cell in cells)
+            {
+                if (cell.getX() == coordinate.Item1 && cell.getY() == coordinate.Item2)
+                {
+                    neighbors.Add(cell);
+                }
+            }
+        }
+        return neighbors;
+    }
+
+    public void changeMovables(List<HexCell> cellsToBeModified)
+    {
+        Debug.Log("change Movables called");
+        foreach (HexCell cell in cells)
+        {
+            cell.movable = false;
+        }
+        foreach (HexCell cell in cellsToBeModified)
+        {
+            cell.movable = true;
+        }
+    }
 }
