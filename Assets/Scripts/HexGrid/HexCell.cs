@@ -11,6 +11,8 @@ public class HexCell : MonoBehaviour {
 
     [SerializeField] private bool isActive = false;
 
+    [SerializeField] List<Material> materials = new List<Material>();
+
     private static string dynamicBaseName = "Hex";
 
     //Get the GameObject’s mesh renderer to access the GameObject’s material and color
@@ -24,6 +26,8 @@ public class HexCell : MonoBehaviour {
         m_Renderer = GetComponent<MeshRenderer>();
 
         m_OriginalColor = m_Renderer.material.color;
+
+        m_Renderer.SetMaterials(materials);
     }
      
      void Update() {

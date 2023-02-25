@@ -121,3 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 0
   y: 0
+  z: 0
+  isActive: 0
+  materials:
+  - {fileID: 2100000, guid: cfdba2674c86ec441a1b01a34cfebd4b, type: 2}

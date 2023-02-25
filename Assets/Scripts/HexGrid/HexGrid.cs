@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,15 +18,17 @@ public class HexGrid : MonoBehaviour
     [SerializeField] HexCell hexCellPrefab;
     [SerializeField] HexCell baseHexCell;
 
-    [SerializeField] int xSize = 10;
-    [SerializeField] int ySize = 10;
-    [SerializeField] int zSize = 1;
+    [SerializeField] int sizeX = 10;
+    [SerializeField] int sizeY = 10;
+    [SerializeField] int sizeZ = 1;
 
     [SerializeField] List<HexCell> cells = new List<HexCell>();
     [SerializeField] List<HexCell> axtiveCells = new List<HexCell>();
 
     void Start() {
-        GenerateHexGrid();
+        if (transform.GetComponentsInChildren<Transform>().Length == 1) {
+            GenerateHexGrid(sizeX, sizeY, sizeZ);
+        }
     }
 
     private HexCell FindCell(int x, int y) {
@@ -46,11 +49,11 @@ public class HexGrid : MonoBehaviour
         axtiveCells.Remove(cell);
     }
 
-    private void GenerateHexGrid() {
+    public void GenerateHexGrid(int sizeX = 0, int sizeY = 0, int sizeZ = 0) {
         HexCell previousHexCell = hexCellPrefab;
-        for (int z = 0; z < zSize; ++z) {
-            for (int x = 0; x < xSize; ++x) {
-                for (int y = 0; y < ySize; ++y) {
+        for (int z = 0; z < sizeZ; ++z) {
+            for (int x = 0; x < sizeX; ++x) {
+                for (int y = 0; y < sizeY; ++y) {
                     if (y == 0) {
                         previousHexCell = GenerateTop(x, y, z);
                     } else {
