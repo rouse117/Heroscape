@@ -13,7 +13,6 @@ public class HexGridEditor : EditorWindow
 
     private int sizeX = 10;
     private int sizeY = 10;
-    private int sizeZ = 1;
 
     private void OnGUI()
     {
@@ -23,7 +22,6 @@ public class HexGridEditor : EditorWindow
 
         sizeX = EditorGUILayout.IntField("Size X", sizeX);
         sizeY = EditorGUILayout.IntField("Size Y", sizeY);
-        sizeZ = EditorGUILayout.IntField("Size Z", sizeZ);
 
         if (GUILayout.Button("Create Hexagon Grid"))
         {
@@ -41,6 +39,6 @@ public class HexGridEditor : EditorWindow
 
         GameObject hexGridObject = Instantiate(hexPrefab);
         HexGrid hexGrid = hexGridObject.GetComponent<HexGrid>();
-        hexGrid.GenerateHexGrid(sizeX, sizeY, sizeZ);
+        hexGrid.GenerateHexGrid(sizeX, sizeY);
     }
 }

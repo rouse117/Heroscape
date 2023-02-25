@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8812442837352702371
 MeshFilter:
@@ -125,3 +125,4 @@ MonoBehaviour:
   isActive: 0
   materials:
   - {fileID: 2100000, guid: cfdba2674c86ec441a1b01a34cfebd4b, type: 2}
+  heightHexCell: {fileID: 100000, guid: 31048d640905d5a448a723dd7007433e, type: 3}

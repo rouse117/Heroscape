@@ -20,14 +20,13 @@ public class HexGrid : MonoBehaviour
 
     [SerializeField] int sizeX = 10;
     [SerializeField] int sizeY = 10;
-    [SerializeField] int sizeZ = 1;
 
     [SerializeField] List<HexCell> cells = new List<HexCell>();
     [SerializeField] List<HexCell> axtiveCells = new List<HexCell>();
 
     void Start() {
         if (transform.GetComponentsInChildren<Transform>().Length == 1) {
-            GenerateHexGrid(sizeX, sizeY, sizeZ);
+            GenerateHexGrid(sizeX, sizeY);
         }
     }
 
@@ -49,16 +48,14 @@ public class HexGrid : MonoBehaviour
         axtiveCells.Remove(cell);
     }
 
-    public void GenerateHexGrid(int sizeX = 0, int sizeY = 0, int sizeZ = 0) {
+    public void GenerateHexGrid(int sizeX = 0, int sizeY = 0) {
         HexCell previousHexCell = hexCellPrefab;
-        for (int z = 0; z < sizeZ; ++z) {
-            for (int x = 0; x < sizeX; ++x) {
-                for (int y = 0; y < sizeY; ++y) {
-                    if (y == 0) {
-                        previousHexCell = GenerateTop(x, y, z);
-                    } else {
-                        previousHexCell = GenerateHexCell(x, y, z, previousHexCell.transform.position, HexCellOffset.Offset.offset3);
-                    }
+        for (int x = 0; x < sizeX; ++x) {
+            for (int y = 0; y < sizeY; ++y) {
+                if (y == 0) {
+                    previousHexCell = GenerateTop(x, y, 0);
+                } else {
+                    previousHexCell = GenerateHexCell(x, y, 0, previousHexCell.transform.position, HexCellOffset.Offset.offset3);
                 }
             }
         }
