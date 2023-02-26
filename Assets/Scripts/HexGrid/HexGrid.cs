@@ -224,17 +224,4 @@ public class HexGrid : MonoBehaviour
         }
         return neighbors;
     }
-
-    public void changeMovables(List<HexCell> cellsToBeModified)
-    {
-        Debug.Log("change Movables called");
-        foreach (HexCell cell in cells)
-        {
-            cell.movable = false;
-        }
-        foreach (HexCell cell in cellsToBeModified)
-        {
-            cell.movable = true;
-        }
-    }
 }
