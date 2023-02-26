@@ -5775,7 +5775,7 @@ MonoBehaviour:
   prefixField: -1
   observableSearch: 2
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 2
   ObservedComponents: []
   viewIdField: 2
   InstantiationId: 0
@@ -11843,7 +11843,7 @@ MonoBehaviour:
   prefixField: -1
   observableSearch: 2
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 2
   ObservedComponents: []
   viewIdField: 1
   InstantiationId: 0
