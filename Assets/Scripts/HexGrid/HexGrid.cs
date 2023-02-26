@@ -15,6 +15,8 @@ public class HexGrid : MonoBehaviour
         }
     }
 
+    [SerializeField] bool playMode = false;
+
     [SerializeField] HexCell hexCellPrefab;
     [SerializeField] HexCell baseHexCell;
 
@@ -37,7 +39,7 @@ public class HexGrid : MonoBehaviour
     }
 
     void Start() {
-
+        Restore();
     }
 
     public void Save() {
@@ -65,10 +67,41 @@ public class HexGrid : MonoBehaviour
                 hexCell.setZ(hexCellDto.Z);
                 hexCell.SetHeight();
                 hexCell.SetName();
+                hexCell.setPlayMode(playMode);
 
                 activeCells.Add(hexCell);
             }
         }
+
+        if (playMode) {
+            foreach (Transform child in transform) {
+                HexCell hexCell = child.GetComponent<HexCell>();
+
+                if (!hexCell.IsActive()) {
+                    cells.Remove(hexCell);
+                    Destroy(child.gameObject);
+                }
+            }
+        }
+    }
+
+    public void Reset() {
+        foreach (Transform child in transform) {
+            Destroy(child.gameObject);
+        }
+
+        cells = new List<HexCell>();
+        activeCells = new List<HexCell>();
+
+        GenerateHexGrid(sizeX, sizeY);
+    }
+
+    public bool getPlayMode() {
+        return playMode;
+    }
+
+    public void setPlayMode(bool playMode) {
+        this.playMode = playMode;
     }
 
     private HexCell FindCell(int x, int y) {

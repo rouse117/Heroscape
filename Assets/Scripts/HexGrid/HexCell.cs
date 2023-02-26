@@ -13,6 +13,8 @@ public class HexCell : MonoBehaviour {
 
     [SerializeField] private bool isActive = false;
 
+    [SerializeField] bool playMode = false;
+
     [SerializeField] List<Material> materials = new List<Material>();
     [SerializeField] Mesh originalMesh;
     [SerializeField] Mesh activeMesh;
@@ -61,6 +63,16 @@ public class HexCell : MonoBehaviour {
     void OnMouseOver() {
         m_Renderer.material.color = m_colorMouseOver;
 
+        if (!playMode) {
+            OnMouseOverEditMode();
+        }
+    }
+
+    void OnMouseExit() {
+        m_Renderer.material.color = m_OriginalColor;
+    }
+
+    private void OnMouseOverEditMode() {
         //Right Mouse Button
         if (Input.GetMouseButtonDown(0)) {
             if (isActive) {
@@ -79,7 +91,7 @@ public class HexCell : MonoBehaviour {
             if (isActive) {
                 SetActive(false);
                 HexGrid.Instance.RemoveActiveCell(this);
-                foreach(GameObject heightCell in heightCells) {
+                foreach (GameObject heightCell in heightCells) {
                     Destroy(heightCell);
                     transform.position = new Vector3(transform.position.x, transform.position.y - HexCellOffset.zOffset, transform.position.z);
                 }
@@ -123,16 +135,20 @@ public class HexCell : MonoBehaviour {
         heightCells.Add(newHex);
     }
 
-    void OnMouseExit() {
-        m_Renderer.material.color = m_OriginalColor;
-    }
-
     public int getX() {
         return x;
     }
 
     public void setX(int x) {
         this.x = x;
+    }
+
+    public bool getPlayMode() {
+        return playMode;
+    }
+
+    public void setPlayMode(bool playMode) {
+        this.playMode = playMode;
     }
 
     public int getY() {

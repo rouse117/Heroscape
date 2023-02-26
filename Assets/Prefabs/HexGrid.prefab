@@ -44,10 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbee874d841c90c419a9a619ee3e4253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playMode: 1
   hexCellPrefab: {fileID: 8807435957585514287, guid: 27bb59971d4e3104a8ff95fd36d14565, type: 3}
   baseHexCell: {fileID: 0}
-  xSize: 10
-  ySize: 10
-  zSize: 1
+  sizeX: 10
+  sizeY: 10
   cells: []
-  axtiveCells: []
+  activeCells: []
