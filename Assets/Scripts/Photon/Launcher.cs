@@ -5,7 +5,7 @@ using Photon.Realtime;
 using UnityEngine.SceneManagement;
 
 // temp namespace
-namespace Com.NotHeroscape.Launcher
+namespace Com.NotHeroscape
 {
     public class Launcher : MonoBehaviourPunCallbacks
     {

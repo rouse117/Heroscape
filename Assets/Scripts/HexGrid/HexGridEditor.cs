@@ -13,10 +13,6 @@ public class HexGridEditor : EditorWindow
 
     private int sizeX = 10;
     private int sizeY = 10;
-<<<<<<< HEAD
-=======
-    private int sizeZ = 1;
->>>>>>> a571d3e (Create HexGrid through Window/Hex Grid Editor)
 
     private void OnGUI()
     {
@@ -26,7 +22,6 @@ public class HexGridEditor : EditorWindow
 
         sizeX = EditorGUILayout.IntField("Size X", sizeX);
         sizeY = EditorGUILayout.IntField("Size Y", sizeY);
-<<<<<<< HEAD
 
         if (GUILayout.Button("Create Blank Hexagon Grid"))
         {
@@ -39,17 +34,6 @@ public class HexGridEditor : EditorWindow
     }
 
     private void CreateHexagonGrid(bool savedVersion)
-=======
-        sizeZ = EditorGUILayout.IntField("Size Z", sizeZ);
-
-        if (GUILayout.Button("Create Hexagon Grid"))
-        {
-            CreateHexagonGrid();
-        }
-    }
-
-    private void CreateHexagonGrid()
->>>>>>> a571d3e (Create HexGrid through Window/Hex Grid Editor)
     {
         if (hexPrefab == null)
         {
@@ -59,7 +43,6 @@ public class HexGridEditor : EditorWindow
 
         GameObject hexGridObject = Instantiate(hexPrefab);
         HexGrid hexGrid = hexGridObject.GetComponent<HexGrid>();
-<<<<<<< HEAD
         hexGrid.setPlayMode(savedVersion);
 
         if (savedVersion) {
@@ -68,9 +51,6 @@ public class HexGridEditor : EditorWindow
             hexGrid.GenerateHexGrid(sizeX, sizeY);
         }
 
-=======
-        hexGrid.GenerateHexGrid(sizeX, sizeY, sizeZ);
->>>>>>> a571d3e (Create HexGrid through Window/Hex Grid Editor)
     }
 }
 */
