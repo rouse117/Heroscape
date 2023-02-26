@@ -23,13 +23,17 @@ public class HexGridEditor : EditorWindow
         sizeX = EditorGUILayout.IntField("Size X", sizeX);
         sizeY = EditorGUILayout.IntField("Size Y", sizeY);
 
-        if (GUILayout.Button("Create Hexagon Grid"))
+        if (GUILayout.Button("Create Blank Hexagon Grid"))
         {
-            CreateHexagonGrid();
+            CreateHexagonGrid(false);
+        }
+
+        if (GUILayout.Button("Create Saved Hexagon Grid")) {
+            CreateHexagonGrid(true);
         }
     }
 
-    private void CreateHexagonGrid()
+    private void CreateHexagonGrid(bool savedVersion)
     {
         if (hexPrefab == null)
         {
@@ -39,6 +43,13 @@ public class HexGridEditor : EditorWindow
 
         GameObject hexGridObject = Instantiate(hexPrefab);
         HexGrid hexGrid = hexGridObject.GetComponent<HexGrid>();
-        hexGrid.GenerateHexGrid(sizeX, sizeY);
+        hexGrid.setPlayMode(savedVersion);
+
+        if (savedVersion) {
+            hexGrid.Restore();
+        } else {
+            hexGrid.GenerateHexGrid(sizeX, sizeY);
+        }
+
     }
 }
