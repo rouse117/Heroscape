@@ -1,6 +1,7 @@
  using UnityEditor;
 using UnityEngine;
 
+#if UNITY_EDITOR
 public class HexGridEditor : EditorWindow
 {
     [MenuItem("Window/Hex Grid Editor")]
@@ -53,3 +54,4 @@ public class HexGridEditor : EditorWindow
 
     }
 }
+#endif
