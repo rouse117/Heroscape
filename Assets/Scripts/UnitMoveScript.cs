@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class UnitMoveScript : MonoBehaviour
 {
@@ -14,7 +16,7 @@ public class UnitMoveScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
         if (this.gameObject.GetComponent< Cube_Multiplayer_Script>().serializedValue == 1 )
         {
             GameObject hex1 = GameObject.Find("Hex(0, 0, 0)");
